@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace rafi_it_ms00001_api.DAO
 {
-    interface IV1Activity
+    interface IV1ActivityRepositories
     {
         Task<V1Activity> Get();
         Task<V1Activity> Get(IIV1ActivityGetByDate model);
