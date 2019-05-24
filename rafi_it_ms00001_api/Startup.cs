@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using rafi_it_ms00001_api.BusinessLayers;
 
 namespace rafi_it_ms00001_api
 {
@@ -33,6 +34,10 @@ namespace rafi_it_ms00001_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // Add application services.
+            services.AddTransient<IActivityBusiness, ActivityBusiness>();
+            //services.AddTransient<IProductRepository, ProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

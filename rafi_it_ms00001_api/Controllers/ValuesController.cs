@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using rafi_it_ms00001_api.BusinessLayers;
+using rafi_it_ms00001_api.Contracts;
 
 namespace rafi_it_ms00001_api.Controllers
 {
@@ -10,36 +12,51 @@ namespace rafi_it_ms00001_api.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/values
+        private readonly IActivityBusiness _activityBusiness;
+
+        public ValuesController(IActivityBusiness activityBusiness)
+        {
+            _activityBusiness = activityBusiness;
+        }
+
+
+        //[ProducesResponseType(200)]
+        [HttpGet("", Name = "GetAll")]
+        public async Task<ActivityResponse> Get()
+        {
+            return await _activityBusiness.Get();
+        }
+
+        //[ProducesResponseType(200)]
+        [HttpGet("GetByDate", Name = "GetByDate")]
+        public async Task<ActivityResponse> Get([FromBody]ActivityGetByDateRangeRequest productRequest)
+        {
+            return await _activityBusiness.Get(productRequest);
+        }
+
+        //[ProducesResponseType(200)]
+        [HttpGet("GetById", Name = "GetById")]
+        public async Task<ActivityResponse> Get([FromBody]ActivityGetByIdRequest productRequest)
+        {
+            return await _activityBusiness.Get(productRequest);
+        }
+
+        //[ProducesResponseType(200)]
+        [HttpGet("GetBySystemName", Name = "GetBySystemName")]
+        public async Task<ActivityResponse> Get([FromBody]ActivityGetBySystemNameRequest productRequest)
+        {
+            return await _activityBusiness.Get(productRequest);
+        }
+
+
+        [ProducesResponseType(200)]
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActivityResponse> Post([FromBody]ActivityPostRequest productRequest)
         {
-            return new string[] { "value1", "value2" };
+            return await _activityBusiness.Post(productRequest);
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
