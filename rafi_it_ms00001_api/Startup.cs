@@ -62,11 +62,11 @@ namespace rafi_it_ms00001_api
             // @see: <root>/Startup.cs (app.UseSwagger(); and app.UseSwaggerui();)
             // @url:  https://blog.jimismith.me/blogs/api-versioning-in-aspnet-core-with-nice-swagg/
             //</summary>
-           // services.AddSwaggerGen(ExtensionSwagger.ConfigureSwaggerGen);
+            services.AddSwaggerGen(ExtensionSwagger.ConfigureSwaggerGen);
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-          
+
 
             services.AddTransient<IV1ActivityRepositories, V1ActivityRepositories>();
 
