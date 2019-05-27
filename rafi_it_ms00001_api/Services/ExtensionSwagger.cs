@@ -90,24 +90,7 @@ Manage creation,
                 }
             });
 
-            swaggerGenOptions.SwaggerDoc("v2.0", new Info
-            {
-                Version = "v2.0",
-                Title = "Microservice00001 Activity API v2.0",
-                Description = "The beta API in the basic mvp approach using microservices in Activty version 2",
-                TermsOfService = "None",
-                Contact = new Contact
-                {
-                    Name = "Francisco S. Abayon",
-                    Email = "francisco.abayon@rafi.ph",
-                    Url = "https://rafi.org.ph/"
-                },
-                License = new License
-                {
-                    Name = "Use under RAFI License",
-                    Url = "https://rafi.org.ph/"
-                }
-            });
+  
 
 
             // @todo: Fix the xmfile setup in the swagger
@@ -126,7 +109,7 @@ Manage creation,
         public static void ConfigureSwaggerUI(SwaggerUIOptions swaggerUIOptions)
         {
             swaggerUIOptions.SwaggerEndpoint($"/api-docs/v1.0/swagger.json", $"V1 Docs");
-            swaggerUIOptions.SwaggerEndpoint($"/api-docs/v2.0/swagger.json", $"V2 Docs");
+            //swaggerUIOptions.SwaggerEndpoint($"/api-docs/v2.0/swagger.json", $"V2 Docs");
             swaggerUIOptions.RoutePrefix = "api-docs";
         }
     }

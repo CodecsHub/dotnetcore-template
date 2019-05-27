@@ -26,7 +26,7 @@ namespace rafi_it_ms00001_api.Controllers
         //the GET using IAction
         //uncomment below to get the Select query with Parameter on it
         //public IActionResult Get([FromBody] V1Branch request)
-        public async Task<ActionResult<V1Activity>> Get()
+        public async Task<ActionResult<V1Activity>> GetAll()
         {
             var output = await _v1activitiyrepo.Get();
             return Ok(output);
@@ -39,7 +39,7 @@ namespace rafi_it_ms00001_api.Controllers
         //the GET using IAction
         //uncomment below to get the Select query with Parameter on it
         //public IActionResult Get([FromBody] V1Branch request)
-        public async Task<ActionResult<V1Activity>> Get([FromBody]IIV1ActivityGetByDate model)
+        public async Task<ActionResult<V1Activity>> GetByDate([FromBody]IIV1ActivityGetByDate model)
         {
             var output = await _v1activitiyrepo.Get(model);
             return Ok(output);
@@ -52,7 +52,7 @@ namespace rafi_it_ms00001_api.Controllers
         //the GET using IAction
         //uncomment below to get the Select query with Parameter on it
         //public IActionResult Get([FromBody] V1Branch request)
-        public async Task<ActionResult<V1Activity>> Get([FromBody]IIV1ActivityGetById model)
+        public async Task<ActionResult<V1Activity>> GetById([FromBody]IIV1ActivityGetById model)
         {
             var output = await _v1activitiyrepo.Get(model);
             return Ok(output);
@@ -65,7 +65,7 @@ namespace rafi_it_ms00001_api.Controllers
         //the GET using IAction
         //uncomment below to get the Select query with Parameter on it
         //public IActionResult Get([FromBody] V1Branch request)
-        public async Task<ActionResult<V1Activity>> Get([FromBody]IIV1ActivityGetBySystemName model)
+        public async Task<ActionResult<V1Activity>> GetBySystemName([FromBody]IIV1ActivityGetBySystemName model)
         {
             var output = await _v1activitiyrepo.Get(model);
             return Ok(output);
