@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using rafi_it_ms00001_api.DAO;
+using rafi_it_ms00001_api.Helpers;
 using rafi_it_ms00001_api.Models;
 using rafi_it_ms00001_api.Repositories;
 using rafi_it_ms00001_api.Services;
@@ -51,6 +52,26 @@ namespace rafi_it_ms00001_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            // @description: control the dependecy in the logger or else it will slow down the application
+            // @todo: refactor the loggin services
+            // @url: https://weblog.west-wind.com/posts/2018/Dec/31/Dont-let-ASPNET-Core-Default-Console-Logging-Slow-your-App-down
+            services.AddLogging(config =>
+            {
+                // clear out default configuration
+                config.ClearProviders();
+
+                config.AddConfiguration(_configuration.GetSection("Logging"));
+                config.AddDebug();
+                config.AddEventSourceLogger();
+                // @fix database issue on azure https://stackoverflow.com/questions/52050167/how-to-override-local-connection-string-with-azure-connection-string
+                if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == EnvironmentName.Development)
+                {
+                    config.AddConsole();
+                }
+            });
+
+
             // Custom Extension services
             services.ConfigureCors();
             services.ConfigureIISIntegration();
@@ -79,6 +100,8 @@ namespace rafi_it_ms00001_api
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            // Add register to centrilize action filter validation
+            services.AddScoped<ValidationFilterAttribute>();
 
             services.AddTransient<IV1ActivityRepositories, V1ActivityRepositories>();
 
