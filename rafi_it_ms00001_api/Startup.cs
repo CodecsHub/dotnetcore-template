@@ -98,10 +98,31 @@ namespace rafi_it_ms00001_api
             services.ConfigureAPIVersioning();
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(config =>
+            {
+                config.RespectBrowserAcceptHeader = true;
+                config.ReturnHttpNotAcceptable = true;
+
+                // basd on tutorial can be used but in the intelense it will deprecated
+                //config.InputFormatters.Add(new XmlSerializerInputFormatter());
+                //config.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+                // config.OutputFormatters.Add(new JsonInputFormatter());
+                //@todo: extend the content negation
+                //@referrence: https://code-maze.com/content-negotiation-dotnet-core/
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvcCore().AddVersionedApiExplorer(options => options.SubstituteApiVersionInUrl = true);
 
             // Add register to centrilize action filter validation
             services.AddScoped<ValidationFilterAttribute>();
+
+            // start of custom DI in startup
+            // @url: https://weblog.west-wind.com/posts/2016/May/23/Strongly-Typed-Configuration-Settings-in-ASPNET-Core
+            // @see: <root>/startup.cs
+            // @see: Controller/HomeController.cs
+            services.AddOptions();
+
+
 
             services.AddTransient<IV1ActivityRepositories, V1ActivityRepositories>();
 
