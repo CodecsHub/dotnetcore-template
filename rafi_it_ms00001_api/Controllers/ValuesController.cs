@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using rafi_it_ms00001_api.DAO;
+using rafi_it_ms00001_api.Models;
 
 namespace rafi_it_ms00001_api.Controllers
 {
@@ -10,36 +12,77 @@ namespace rafi_it_ms00001_api.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+
+        private readonly IV1ActivityRepositories _v1activitiyrepo;
+
+        public ValuesController(IV1ActivityRepositories v1activitiyrepo)
         {
-            return new string[] { "value1", "value2" };
+            _v1activitiyrepo = v1activitiyrepo;
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [HttpGet("", Name = "GetAll")]
+        //public ActionResult<IEnumerable<string>> Get()
+        // @todo: update and finalize the controller request public IActionResult Get() can be substitute
+        //the GET using IAction
+        //uncomment below to get the Select query with Parameter on it
+        //public IActionResult Get([FromBody] V1Branch request)
+        public async Task<ActionResult<V1Activity>> Get()
         {
-            return "value";
+            var output = await _v1activitiyrepo.Get();
+            return Ok(output);
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
+
+        [HttpGet("GetByDate", Name = "GetByDate")]
+        //public ActionResult<IEnumerable<string>> Get()
+        // @todo: update and finalize the controller request public IActionResult Get() can be substitute
+        //the GET using IAction
+        //uncomment below to get the Select query with Parameter on it
+        //public IActionResult Get([FromBody] V1Branch request)
+        public async Task<ActionResult<V1Activity>> Get([FromBody]IIV1ActivityGetByDate model)
         {
+            var output = await _v1activitiyrepo.Get(model);
+            return Ok(output);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+
+        [HttpGet("GetById", Name = "GetById")]
+        //public ActionResult<IEnumerable<string>> Get()
+        // @todo: update and finalize the controller request public IActionResult Get() can be substitute
+        //the GET using IAction
+        //uncomment below to get the Select query with Parameter on it
+        //public IActionResult Get([FromBody] V1Branch request)
+        public async Task<ActionResult<V1Activity>> Get([FromBody]IIV1ActivityGetById model)
         {
+            var output = await _v1activitiyrepo.Get(model);
+            return Ok(output);
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+
+        [HttpGet("GetBySystemName", Name = "GetBySystemName")]
+        //public ActionResult<IEnumerable<string>> Get()
+        // @todo: update and finalize the controller request public IActionResult Get() can be substitute
+        //the GET using IAction
+        //uncomment below to get the Select query with Parameter on it
+        //public IActionResult Get([FromBody] V1Branch request)
+        public async Task<ActionResult<V1Activity>> Get([FromBody]IIV1ActivityGetBySystemName model)
         {
+            var output = await _v1activitiyrepo.Get(model);
+            return Ok(output);
         }
+
+
+        [HttpPost("", Name = "Post")]
+        //public ActionResult<IEnumerable<string>> Get()
+        // @todo: update and finalize the controller request public IActionResult Get() can be substitute
+        //the GET using IAction
+        //uncomment below to get the Select query with Parameter on it
+        //public IActionResult Get([FromBody] V1Branch request)
+        public async Task<ActionResult<V1Activity>> Post([FromBody]IIV1ActivityPost model)
+        {
+            var output = await _v1activitiyrepo.Post(model);
+            return Ok(output);
+        }
+
     }
 }

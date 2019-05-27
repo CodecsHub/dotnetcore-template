@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace rafi_it_ms00001_api.DAO
 {
-    interface IV1ActivityRepositories
+    public interface IV1ActivityRepositories
     {
-        Task<V1Activity> Get();
-        Task<V1Activity> Get(IIV1ActivityGetByDate model);
-        Task<V1Activity> Get(IIV1ActivityGetById model);
-        Task<V1Activity> Get(IIV1ActivityGetBySystemName model);
-        Task<V1Activity> Post(IIV1ActivityPost model);
+        Task<List<V1Activity>> Get();
+        Task<List<V1Activity>> Get(IIV1ActivityGetByDate model);
+        Task<List<V1Activity>> Get(IIV1ActivityGetById model);
+        Task<List<V1Activity>> Get(IIV1ActivityGetBySystemName model);
+        Task<List<V1Activity>> Post(IIV1ActivityPost model);
     }
 }
