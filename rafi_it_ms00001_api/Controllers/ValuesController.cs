@@ -8,7 +8,7 @@ using rafi_it_ms00001_api.Models;
 
 namespace rafi_it_ms00001_api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:Apiversion}/values")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
@@ -71,7 +71,15 @@ namespace rafi_it_ms00001_api.Controllers
             return Ok(output);
         }
 
-
+        /// <summary>
+        /// Returns a group of Employees matching the given first and last names.
+        /// </summary>
+        /// <remarks>
+        /// Here is a sample remarks placeholder.
+        /// </remarks>
+        /// <param name="firstName">The first name to search for</param>
+        /// <param name="lastName">The last name to search for</param>
+        /// <returns>A string status</returns>
         [HttpPost("", Name = "Post")]
         //public ActionResult<IEnumerable<string>> Get()
         // @todo: update and finalize the controller request public IActionResult Get() can be substitute
