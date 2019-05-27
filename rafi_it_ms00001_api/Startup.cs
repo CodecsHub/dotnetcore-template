@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -122,7 +124,49 @@ namespace rafi_it_ms00001_api
                 app.UseHsts();
             }
 
+            //@url ; https://www.youtube.com/watch?v=Y5ZLhxZtww8&t=459s
+            // Configure the HTTP request pipeline.
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.UseHttpsRedirection();
+            //app.UseAuthentication();
+            //app.UseMiddleware<MiddlewareTokenManager>();
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                HttpOnly = HttpOnlyPolicy.Always,
+                Secure = CookieSecurePolicy.Always,
+                MinimumSameSitePolicy = SameSiteMode.None
+            });
+
+                // @title: secure the web http headers
+            // @todo: refactor to extension services
+            // Begin
+            //X-Content-Type-Option Header
+            app.UseXContentTypeOptions();
+
+            // Referrer-Policy Header
+            app.UseReferrerPolicy(opts => opts.NoReferrer());
+
+            //X-XSS-Protection Header
+            app.UseXXssProtection(opts => opts.EnabledWithBlockMode());
+
+            //X-Frame-Option Header
+            app.UseXfo(opts => opts.Deny());
+
+            //Content-Security-Header Policy
+            app.UseCsp(opts => opts
+            .BlockAllMixedContent()
+            .StyleSources(s => s.Self())
+            .StyleSources(s => s.UnsafeInline())
+            .FontSources(s => s.Self())
+            .FormActions(s => s.Self())
+            .FrameAncestors(s => s.Self())
+            .ImageSources(s => s.Self())
+            .ScriptSources(s => s.Self())
+            );
+            //End
+
             app.UseMvc();
         }
     }
